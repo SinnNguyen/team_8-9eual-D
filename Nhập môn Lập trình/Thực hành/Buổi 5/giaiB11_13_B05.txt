@@ -1,0 +1,86 @@
+using System;
+
+namespace Bai1
+{
+    class Program
+    {
+        static int Fibonacci(int n)
+        {
+            if (n == 1 || n == 2) return 1;
+            int f1 = 1, f2 = 1;
+            int i = 3, fn = 0;
+            while (i <= n)
+            {
+                fn = f1 + f2;
+                f1 = f2;
+                f2 = fn;
+                i++;
+            }
+            return fn;
+        }
+        static void ResetAllVariables(ref int n, ref int code, ref int soluong)
+        {
+            n = 0; code = 0; soluong = 0;
+        }
+        static void InputPurchasedProducts(ref int code, ref int soluong)
+        {
+            Console.Write("     code : ");
+            code = int.Parse(Console.ReadLine());
+            Console.Write(" So luong : ");
+            soluong = int.Parse(Console.ReadLine());
+        }
+        static void PrintInvoice(int i, int code, int soluong, ref double tong)
+        {
+            string name = "";
+            double price = 0;
+            switch(code)
+            {
+                case 1: { name = "Cochorro Quente"; price = 4; break; }
+                case 2: { name = "X-Salada"; price = 4.5 ; break; }
+                case 3: { name = "X-Bacon"; price = 5; break; }
+                case 4: { name = "Torrada simples "; price = 2; break; }
+                case 5: { name = "Refrigerante"; price = 1; break; }
+            }
+            Console.WriteLine("                {0, 10} {1, 10} {2, 20} {3, 10} {4, 10} {5, 10}", 
+                i, code, name, soluong, price, soluong*price);
+            tong = tong + soluong * price;
+        }
+        static void Main(string[] args)
+        {
+            // Fibonacci
+            Console.Write(" Nhap so Fibonacci thu n = ");
+            int nf = int.Parse(Console.ReadLine());
+            int fn = Fibonacci(nf);
+            Console.WriteLine(" Fibonacci : " + fn);
+
+            // bài 13
+            int code = 0, n=0, soluong=0 ;
+            int chon = 1;
+            
+            while (chon == 1)
+            {
+                //Thiết lập giá trị các biến về trạng thái ban đầu
+                ResetAllVariables(ref n, ref code, ref soluong);
+                //Nhập số loại sản phẩm
+                Console.Write("The number of products: ");
+                n = int.Parse(Console.ReadLine());
+                Console.WriteLine("  Hoa don ");
+                double tong = 0;
+                //Tính và in hóa đơn
+                Console.WriteLine("                 {0, 10} {1, 10} {2, 15} {3, 10} {4, 10} {4, 10}",
+                                    "STT", "code", "Name", "Quantity", "Price", "Total");
+                for (int i = 0; i < n; i++)
+                {
+                    //Nhập mã code và số lượng các sản phẩm đã mua
+                    InputPurchasedProducts(ref code, ref soluong); 
+                    PrintInvoice(i, code, soluong, ref tong);                   
+                }
+                Console.WriteLine("{0, 90}","Total : " + tong);
+                //Nhập lựa chọn
+                Console.Write(" Tiep tuc (0/1) : ");
+                chon = int.Parse(Console.ReadLine());
+            }
+            Console.WriteLine("Thank you & Good bye!");
+        }
+    }
+}
