@@ -55,30 +55,32 @@ namespace Buoi_6
             }
             return min;
         }
-        static void SoChinhPhuong(int[] A, int N)
+        static void outSCP(int[] A, int N) 
         {
-            double x = Math.Sqrt(N);
-            if ((int)Math.Sqrt(x) * Math.Sqrt(x) == N)
+
+            static bool scp(int x)
             {
-                Console.WriteLine("Cac so chinh phuong trong mang la:");
-            }
-            else
+                int sqr = (int)Math.Sqrt(x);
+                return (Math.Pow(sqr,2) == x);
+            }    
+            for(int i = 0; i < N; i++) 
             {
-                Console.WriteLine("Khong co so chinh phuong trong mang");
+                if(scp(A[i])) 
+                    Console.Write("{0} ", A[i]);
             }
         }
-        static void TrungBinhCong(int[] A, int N)
+        static double TrungBinhCong(int[] A, int N)
         {
-            int i, tong = 0, Dodai = 0;
-            for (i = 0; i < N; i++)
+            double tong = 0.00; int Dodai = 0;
+            for (int i = 0; i < N; i++)
             {
                 if (A[i] % 2 != 0)
                 {
-                    tong = tong + A[i];
-                    Dodai = Dodai + 1;
+                    tong += A[i];
+                    Dodai++;
                 }
             }
-            Console.WriteLine("Tong la:{0}", tong / Dodai);
+            return tong / Dodai;
         }
         static void ChiaMang(int[] A, int N)
         {
@@ -99,19 +101,14 @@ namespace Buoi_6
                     u++;
                 }
             }
-            Console.WriteLine("Cac phan tu cham la");
-            for (int i = 0; i < h; i++)
-            {
-                Console.WriteLine("{0} ", Chan[i]);
-            }
-            Console.Write("\nCac phan tu le la:\n");
-            for (int i = 0; i < u; i++)
-            {
-                Console.WriteLine("{0} ", Le[i]);
-            }
+            Console.Write("     Cac phan tu chan la: ");
+            for (int i = 0; i < h; i++)            
+                Console.Write("{0} ", Chan[i]);            
             Console.WriteLine();
-
-
+            Console.Write("     Cac phan tu le la  : ");
+            for (int i = 0; i < u; i++)          
+                Console.Write("{0} ", Le[i]);
+            Console.WriteLine();
         }
         static void Main(string[] args)
         {
@@ -159,15 +156,16 @@ namespace Buoi_6
                         {
                             Console.Clear();
                             Console.WriteLine(new string('*', 120));
-
-                            SoChinhPhuong(A, B.Length);
+                            Console.Write("     So chinh phuong trong Arr[] = ");
+                            outSCP(A, B.Length);
+                            Console.WriteLine(); 
                         }
                         break;
                     case 5: //Bai 6
                         {
                             Console.Clear();
                             Console.WriteLine(new string('*', 120));
-                            TrungBinhCong(A, B.Length);
+                            Console.WriteLine("     Avg of elements in Arr[] = {0:0.00}", TrungBinhCong(A, B.Length));
                         }
                         break;
                     case 6: // Bai 7
