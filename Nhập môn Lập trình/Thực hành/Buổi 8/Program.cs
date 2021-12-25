@@ -36,43 +36,158 @@ namespace ConsoleApp
         //Xuất dãy
         static void PrintArray(int[] a, int n)
         {
-
+            for (int i = 0; i <= n; i++)
+                Console.Write("{0} ", a[i]);
+            Console.WriteLine();
         }
         // Bài 1 : Hãy tìm số nguyên dương nhỏ nhất không xuất hiện trong 𝑎.
         static int SoNguyenNhonhat(int[] a, int n)
         {	//Hàm trả về số nguyên nhỏ nhất không có trong dãy
-
+            bool[] check = new bool[max + 1];
+            for(int i = 0; i < n - 1; i++)
+            {
+                check[i] = false;
+                check[a[i]] = true;
+            }
+            for(int  i = 1; i <= n; i++)
+                if (check[i] == false) 
+                    return i;
+            return 0;
         }
         // Bài 2 - Sàng nguyên tố : Cho số nguyên 𝑛 (1 ≤ 𝑛 ≤ 10^6).
         // Viết chương trình liệt kê các số nguyên tố nhỏ hơn hay bằng 𝑛.
         static bool[] Eratosthenes(int N)
         {	//Hàm trả về mảng đánh dấu kiểu bool
-
+            bool[] check = new bool[N + 1];
+            for (int i = 0; i < N + 1; i++)      
+                check[i] = true;
+            for (int i = 2; i <= N; i++)
+            {
+                if (check[i] == true)
+                {
+                    for (int j = 2 * i; j <= N; j = j + i)
+                        check[j] = false;
+                }
+            }
+            return check;
         }
         // Bài 3 : cho biết mỗi số nguyên trong dãy 𝑎 xuất hiện bao nhiêu lần?
         static void Bai03(int[] a, int n)
         {
-
+            int i, j, bien_dem;
+            int[] Count = new int[max];
+            for (i = 0; i < n; i++)
+                Count[i] = -1;
+            for (i = 0; i < n; i++)
+            {
+                bien_dem = 1;
+                for (j = i + 1; j < n; j++)
+                {
+                    if (a[i] == a[j])
+                    {
+                        bien_dem++;
+                        Count[j] = 0;
+                    }
+                }
+                if (Count[i] != 0)
+                    Count[i] = bien_dem; 
+            }
+            for (i = 0; i < n; i++)
+            {
+                if (Count[i] != 0)   
+                    Console.WriteLine("{0} xuat hien {1} lan", a[i], Count[i]); 
+            }
         }
         // Bài 4 : mở rộng bài 3 với dãy 𝑎 chứa vừa số nguyên âm, vừa chứa số nguyên dương
         static void Bai04(int[] a, int n)
         {
-
+            int i, j, bien_dem;
+            int[] Count = new int[max];
+            for (i = 0; i < n; i++)       
+                Count[i] = -1;
+            for (i = 0; i < n; i++)
+            {
+                bien_dem = 1;
+                for (j = i + 1; j < n; j++)
+                {
+                    if (a[i] == a[j])
+                    {
+                        bien_dem++;
+                        Count[j] = 0;
+                    }
+                }
+                if (Count[i] != 0)
+                    Count[i] = bien_dem;
+            }
+            for (i = 0; i < n; i++)
+            {
+                if (Count[i] != 0)
+                    Console.WriteLine("{0,3} : {1,3} lan", a[i], Count[i]);
+            }
         }
         // Bài 5 : Đếm số lần xuất hiện ký tự trong chuỗi
         static void Bai05()
         {
-
+            int[] count = new int[26];
+            Console.Write("Nhap xau: ");
+            string s = Console.ReadLine().ToLower();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] >= 97 && s[i] <= 125 && s[i] != 32)    
+                    count[s[i] - 97]++;
+                
+                Console.WriteLine(s[i] + ": " + count[s[i] - 97]);
+            }
         }
         // Bài 6 : Lớp học
         static void Lophoc()
         {
-
+            int[] a = { 7, 4, 2, 8, 6, 4, 2, 4 };
+            int[] b = { 3, 7, 2, 1, 2, 7, 1, 4, 5 };
+            int[] count = new int[11];
+            for (int i = 1; i < count.Length; i++)
+            {
+                count[i] = 0;
+                for (int j = 0; j <= count.Length; j++)
+                {
+                    if (a[i] == b[j]) 
+                        count[i]++;
+                    Console.WriteLine(count[i]++);
+                }
+            }
         }
         // Bài 7: phân tích ra các thừa số nguyên tố.
         static string PhantichTSNT(int N)
         {	//Hàm trả về chuỗi thừa số nguyên tố của N
-
+            bool[] check = new bool[N + 1];
+            check = Eratosthenes(N);
+            string thuaso = "";
+            int n = N;
+            for (int i = 2; i <= n / 2 && N != 0; i++)
+            {
+                if (check[i])
+                {
+                    for (int luythua = 2; luythua < i; luythua++)
+                    {
+                        if (N % luythua == 0)
+                        {
+                            if (N == luythua)
+                            {
+                                thuaso += $"{luythua}";
+                                N /= luythua;
+                            }
+                            else
+                            {
+                                thuaso += $"{luythua}.";
+                                N /= luythua;
+                            }
+                        }
+                    }
+                }
+            }
+            if (thuaso == "")
+                thuaso = $"{N}";
+            return thuaso;
         }
         static void Main(string[] args)
         {
@@ -139,3 +254,4 @@ namespace ConsoleApp
         }
     }
 }
+
